@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- unicode -->
+    <meta charset="UTF-8">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/8df69b0d87.js" crossorigin="anonymous"></script>
+
+    <!-- Custom style -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- Tab title -->
+    <title>Avital | User management</title>
+
+
+
+</head>
+
+<body onload="showPage('dashboard'); setupCounters()">
+
+    <div class="containter mainDiv">
+
+        <!-- Top navbar -->
+        <div class="row topNavBar">
+
+            <!-- Logo -->
+            <div class="col-1">
+                <img class="topNavLogo" src="img/aphtech.png">
+            </div>
+
+            <!-- White space -->
+            <div class="col-9">
+                <p id="topNavHeader">Dashboard</p>
+            </div>
+
+            <!-- Links -->
+            <div class="col-2 row">
+
+                <!-- Settings -->
+                <div class="col-3 nabBarLinks">
+                    <a href="#">Settings</a>
+                </div>
+
+                <!-- Account -->
+                <div class="col-9 nabBarLinks">
+                    <a href="#">My account</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Left Navbar -->
+        <div class="leftNavBar">
+
+
+            <!-- Main -->
+            <p class="leftNavHeader">Home</p>
+            <a class="leftNavLink" onclick="setupCounters(); showPage('dashboard')"><i
+                    class="fas fa-home icon"></i>Dashboard</a>
+            <a class="leftNavLink" onclick="showPage('allUsersTable')"><i class="fas fa-list icon"></i>All users</a>
+            <a class="leftNavLink" onclick="showPage('changeLog')"><i class="fas fa-stream icon"></i>Change log</a>
+
+            <!-- Manage -->
+            <p class="leftNavHeader">Manage</p>
+            <a class="leftNavLink" onclick="showPage('newUserForm')"><i class="fas fa-plus icon"></i>New user</a>
+            <a class="leftNavLink" onclick="showPage('modifyUserForm')"><i class="fas fa-edit icon"></i>Modify user</a>
+            <a class="leftNavLink" onclick="showPage('deleteUserForm')"><i class="fas fa-trash-alt icon"></i>Delete
+                user</a>
+
+
+        </div>
+
+        <!-- Site body -->
+        <div class="siteBody">
+
+            <!-- Dashboard -->
+            <div id="dashboard" class="page dashboard" hidden>
+
+                <div class="row">
+                    <p class="col-12">Hello there, ready to manage some users? &#129299;</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 dashboardCounter">
+                        <p class="dashboardCounterHeader">Total users</p>
+                        <p class="dashboardCounterValue" id="totalUsers"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- All users -->
+            <div id="allUsersTable" class="page">
+
+                <!-- Buttons -->
+                <div class="allUsersButtons" id="allUsersButtons">
+                    <btn class="btn btn-success" onclick="showPage('newUserForm')"><i class="fas fa-plus icon"></i>New user</btn>
+                    <btn class="btn btn-default" onclick="showPage('modifyUserForm')"><i class="fas fa-edit icon"></i>Edit user</btn>
+                    <btn class="btn btn-default" onclick="showPage('deleteUserForm')"><i class="fas fa-trash-alt icon"></i>Delete user</btn>
+                </div>
+
+                <!-- table -->
+                <div id="tableContainer"></div>
+
+
+            </div>
+
+            <!-- Change log -->
+            <div id="changeLog" class="page"></div>
+
+            <!-- New user -->
+            <div class="page newUserForm" id="newUserForm">
+
+                <!-- Header -->
+                <p class="formHeader">Enter all user's details:</p>
+                <hr>
+
+                <!-- Inputs -->
+                <div>
+                    <!-- Full name input -->
+                    <div class="formInput">
+                        <p class="inputLable">Full Name</p>
+                        <input class="inputField" type="text" id="fullName" placeholder="Jason Statham">
+                    </div>
+
+                    <!-- Email address -->
+                    <div class="formInput">
+                        <p class="inputLable">Email address</p>
+                        <input class="inputField" type="email" id="emailAddress" placeholder="Jason@thebest.com">
+                    </div>
+
+                    <!-- Mobile phone input-->
+                    <div class="formInput">
+                        <p class="inputLable">Mobile phone</p>
+                        <input class="inputField" type="text" id="mobilePhone" placeholder="0524862352">
+                    </div>
+
+                </div>
+
+                <!-- Done button -->
+                <button class="btn btn-success" onclick="addNewUser()">Done</button>
+
+                <!-- Cancel button -->
+                <button class="btn btn-light" onclick="showPage('allUsersTable')">Cancel</button>
+
+
+            </div>
+
+            <!-- Modify user -->
+            <div id="modifyUserForm" class="page">
+
+                <!-- Header -->
+                <p id="modifyUserFormHeader">Choose user to modify</p>
+
+                <!-- Table -->
+                <div id="modifyTableContainer"></div>
+
+                <!-- Buttons -->
+                <div class="modifyButtons" id="modifyButtons">
+                    <button class="btn btn-success" onclick="editUser()">Done</button>
+                    <button class="btn btn-light" onclick="showPage('allUsersTable')">Cancel</button>
+                </div>
+
+                <!-- Form -->
+                <div class="modifyUserFormInputs" id="modifyUserFormInputs">
+                    <!-- Header -->
+                    <p class="formHeader">Modify the needed details</p>
+                    <hr>
+
+                    <!-- Inputs -->
+                    <div>
+                        <!-- Full name input -->
+                        <div class="formInput">
+                            <p class="inputLable">Full Name</p>
+                            <input class="inputField" type="text" id="fullNameModify" placeholder="Jason Statham">
+                        </div>
+
+                        <!-- Email address -->
+                        <div class="formInput">
+                            <p class="inputLable">Email address</p>
+                            <input class="inputField" type="email" id="emailAddressModify" placeholder="Jason@thebest.com">
+                        </div>
+
+                        <!-- Mobile phone input-->
+                        <div class="formInput">
+                            <p class="inputLable">Mobile phone</p>
+                            <input class="inputField" type="text" id="mobilePhoneModify" placeholder="0524862352">
+                        </div>
+
+                    </div>
+
+                    <!-- Done button -->
+                    <button class="btn btn-success" onclick="submitChanges()">Done</button>
+
+                    <!-- Cancel button -->
+                    <button class="btn btn-light" onclick="showPage('allUsersTable')">Cancel</button>
+
+                </div>
+            </div>
+
+            <!-- Delete user -->
+            <div id="deleteUserForm" class="page">
+
+                <!-- Header -->
+                <p>Choose user to delete</p>
+                <div id="deleteTableContainer"></div>
+                <button class="btn btn-success" onclick="popUser()">Done</button>
+                <button class="btn btn-light" onclick="showPage('allUsersTable')">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="js/scripts.js"></script>
+    <script src="js/validations.js"></script>
+    <script src="js/userChanges.js"></script>
+    <script src="js/data.js"></script>
+</body>
+
+</html>
